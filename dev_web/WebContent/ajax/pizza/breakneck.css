@@ -1,0 +1,16 @@
+@charset "UTF-8";
+body {
+  color: darkred;
+  font-family: sans-serif;
+  margin: 2em;
+  padding: 1em;
+  border: double darkred;
+}
+
+.customer-info {
+  font-weight: bold;
+}
+
+.customer-data {
+  color: black;
+}

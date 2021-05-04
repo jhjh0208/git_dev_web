@@ -1,0 +1,130 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>목 없는 피자 주문?</title>
+<style type="text/css">
+body {
+	color: darkred;
+	font-family: sans-serif;
+	margin: 2em;
+	padding: 1em;
+	border: double darkred;
+}
+
+.customer-info {
+	font-weight: bold;
+}
+
+.customer-data {
+	color: black;
+}
+
+div#d_result {
+	width: 300px;
+	height: 100px;
+	border: 1px solid red;
+}
+</style>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+	'use stict'
+	let xhrObject = null;//변수 선언
+	let user_tel = '';
+	function createRequest() {
+		try {
+			//IE8.0이상, 사파리, 오페라, 크롬, 파이어폭스
+			xhrObject = new XMLHttpRequest();
+		} catch (trymicrosoft) {
+			try {
+				xhrObject = new ActiveXObject("Msxml2.XMLHTTP"); //IE6.0	
+			} catch (e) {
+				xhrObject = null;
+			}
+		}
+		if (xhrObject == null) {
+			alert("비동기통신 객체 생성 에러.");
+		}
+	}
+	function getCustomerInfo() {
+		createRequest();
+		// let user_tel = document.getElementById("mem_tel").value;
+		user_tel = $("#mem_tel").val(); //#도 써야됨ㅋㅋ
+		//사용자가 입력한 값 초기화
+		$("#mem_tel").val("");
+		alert("사용자가 입력한 전번:" + user_tel);
+		//입력 컴포넌트에 포커스
+		$("#mem_tel").focus();
+		$.ajax({
+			url : 'customer.json',
+			dataType : 'json',
+			success : function(data) {
+				//alert("data:"+data);
+				let result = JSON.stringify(data);
+				let jsonDoc = JSON.parse(result); //배열로 바꾸는 작업
+				//$("#d_result").text(jsonDoc[0].mem_tel+", "+jsonDoc[2].mem_tel);
+// 				$("#d_result").text();
+				let imsi='';
+				if (jsonDoc.length > 0) { // 값이 있는 거니?
+					for (let i = 0; i < jsonDoc.length; i++) {
+						if (user_tel === jsonDoc[i].mem_tel) {
+							imsi += jsonDoc[i].mem_addr;// 문자열 이어붙이기
+						}
+					}////////////end of for
+				}////////////////end of if
+				//배송지 주소 자동 입력
+				$("#mem_addr").text(imsi);
+			}
+			,statusCode : {
+				404 : function() {
+					alert("page not found");
+				}
+			}
+
+		});
+	}//////////////////////getCustomerInfo////////////
+
+	function orderPizza() {
+
+	}
+</script>
+</head>
+<body>
+	<div id="d_result"></div>
+	<input type="hidden" id="mem_name" name="mem_name" value="홍길동">
+	<p>
+		<img src="breakneck-logo.gif" alt="Break Neck Pizza" />
+	</p>
+	<p>
+		전화 번호를 입력하세요: <input type="text" size="14" id="mem_tel" name="mem_tel"
+			onChange="getCustomerInfo()" />
+	</p>
+	<p>여기에 주문을 입력하세요:</p>
+	<p>
+		<textarea name="paper" id="paper" rows="6" cols="50"></textarea>
+	</p>
+	<p>귀하의 주문은:</p>
+	<!-- 
+   JSON포맷의 이름과 태그의 name속성과 id속성을 같은 값으로 통일함.
+   name속성은 jsp에서 사용자가 입력한 값을 읽을 때 사용함.
+   id속성은 javascript에서 사용자가 입력한 값을 읽을 때 사용함.
+   name과 id속성은 같은 값을 사용함.
+   오라클 서버에 테이블 컬럼명과 VO패턴의 멤버변수 이름, Map의 key는 모두 통일해서 사용함.
+    -->
+	<p>
+		<textarea name="mem_addr" id="mem_addr" rows="4" cols="50"></textarea>
+	</p>
+	<p>
+		<input type="button" id="btn_order" value="Order Pizza"
+			onclick="orderPizza()" />
+	</p>
+	<div id="d_msg"></div>
+</body>
+</html>
+
+
+
+
+
+
+

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 뷰포트란?
+        웹페이지에서 사용자에게 보여지는 영역이다.
+        전자기기 마다 다르면, 컴퓨터 하면보다는 휴대폰에서 더 적게 나타남.
+        태블릿관 휴대폰이 보급되고 컴퓨터 화면보다 작은 기기들로 웹서핑을 
+        시작하니 뷰포트가 안맞는 이슈가 발생함.
+        이 문제 해결을 위해 기기 브라우저는 전체 웹 페이지를 자신의 화면에 
+        맞게 축소하게 됨. 
+    
+        반응형 웹 제작시 지켜야 할 규칙
+        하나. 큰 고정 너비 요소를 사용하지 말 것.
+        둘. 콘텐츠가 렌더링 되기 위해 특정 뷰포트 너비에 의존하지 않도록 할 것.
+        셋. CSS 미디어 쿼리를 사용하여 작은 화면과 큰 화면에 다른 스타일 적용 할 것.
+        width=device-width=> 장치의 화면 너비를 따르도록 페이지 너비를 설정한다.
+        initial-scale => 브라우저에서 처음 페이지를 로드할 때 초기 확대, 축소 레벨을 설정할 수 있다.
+        세로 방향으로 스크롤을 하지만 가로방향으로는 스크롤을 하지 않는다. 
+    
+        minimum-scale : 속성값은 양수. - 더이상 작아지면 안된다, 할 때 사용. - 뷰포트의 최소 축소비율을 지정한다. - 기본값은 0.25 이다.
+        maximum-scale : 속성값은 양수. - 뷰포트의 최소 확대비율을 지정한다. - 기본값은 5.0 이다.
+        javascript와 java코드를 같이 쓸 수 있는 것처럼
+        텍스트와 변수의 값을 함께 쓸 수 있는 string template가 추가 되었다.
+        물결기호 옆에 있는 백틱기호(`)를 이용해서 사용 가능함.-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="images/favicon.png"/>
+    <style>
+        .tag{
+            display: inline-block; /* display옵션을 주어서 콘텐츠를 감싸준다. - 왜냐하면 외적변화가 없는 태그라서. - 이렇게라도 해야 눈에 보인다. */
+            background-color: cornflowerblue;
+            font-size: 100px;
+            margin-top: 16px;
+            padding: 16px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="tag">Window Size</div>
+    <script>
+        const tag = document.querySelector('.tag');
+        function updateTag(){
+            tag.innerHTML = `
+            window screen: ${window.screen.width}, ${window.screen.height} <br/>
+            window outer: ${window.outerWidth}, ${window.outerHeight} <br/>
+            window inner: ${window.innerWidth}, ${window.innerHeight} <br/>
+            documentElement.clientwidth: ${document.documentElement.clientWidth}, ${document.documentElement.clientHeight} <br/>
+            `
+        }
+        window.addEventListener('resize',() => { //arrow function
+            updateTag();
+        });
+        updateTag();
+        </script>
+    
+</body>
+</html>

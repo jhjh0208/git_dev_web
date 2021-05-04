@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        'use strict'
+        window.onload = function(){
+            let header = document.createElement("h1");
+            let textNode = document.createTextNode("제목추가");
+            //노드를 연결합니다.
+            header.appendChild(textNode);
+            document.body.appendChild(header);
+        };
+
+    </script>
+</body>
+</html>
